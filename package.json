@@ -1,0 +1,16 @@
+{
+    "name": "bun-sample",
+    "module": "index.ts",
+    "type": "module",
+    "scripts": {
+      "build": "bun build.ts"
+    },
+    "devDependencies": {
+      "bun-types": "latest",
+      "p-elements-core": "^1.2.2"
+    },
+    "peerDependencies": {
+      "typescript": "^5.0.0"
+    }
+  }
+  
