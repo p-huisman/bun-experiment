@@ -5,7 +5,7 @@
 	},
 	
     "workspaceMount": "src=${localWorkspaceFolder},dst=/workspace,type=bind,consistency=cached",
-    "workspaceFolder": "/workspace",
+    "workspaceFolder": "./",
 	
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [3000, 5000],
@@ -24,31 +24,6 @@
 			"dockerDashComposeVersion": "v2"
     	},
 		"github-cli": "latest"
-	},
-
-	"settings": {
-		"workbench.colorTheme": "Visual Studio 2019 Dark",
-		"terminal.integrated.defaultProfile.linux": "zsh",
-		"editor.formatOnPaste": true,
-
-		"editor.guides.bracketPairs": "active",
-
-		"scm.defaultViewMode": "tree",
-		"debug.internalConsoleOptions": "neverOpen",
-
-		"eslint.validate": [
-			"javascript",
-			"typescript"
-		],
-		"eslint.workingDirectories": [
-			{
-				"directory": "./",
-				"changeProcessCWD": true
-			}
-		]
-		// ,
-		// "liveServer.settings.NoBrowser": true,
-		// "liveServer.settings.port": 5000
 	},
 
 	// Use 'postCreateCommand' to run commands after the container is created.
