@@ -1,0 +1,10 @@
+:host{
+    color: burlywood;
+    background-color: black;
+    margin: 1em;
+    display: flex;
+}
+
+:host > div {
+    margin: 2em;
+}

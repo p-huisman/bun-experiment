@@ -17,7 +17,7 @@
       "skipLibCheck": true,
       "strictNullChecks": false,
       "types": [
-        "bun-types", // add Bun global
+        "bun-types", "p-elements-core" // add Bun global
       ]
     }
   }

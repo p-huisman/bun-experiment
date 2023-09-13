@@ -6,7 +6,7 @@
     <title>Demo</title>
     <script src="https://unpkg.com/p-elements-core@1.2.2/dist/p-elements-core.js" crossorigin defer></script>
     <script>
-    const socket = new WebSocket(`ws://${location.host}/build`);
+    const socket = new WebSocket(`${location.protocol === "https:"? "wss" : "ws"}://${location.host}/build`);
     socket.addEventListener("message", (event) => {
       if (event.data === "reload") location.reload();
       if (event.data === "close") socket.close();
@@ -14,7 +14,7 @@
     </script>
   </head>
   <body>
-    <p-test></p-test>
-    <script type="module" src="./dist/dummy-component.js"></script>
+    <p-dummy></p-dummy>
+    <script type="module" src="dist/dummy-component.js"></script>
   </body>
 </html>
