@@ -1,13 +1,8 @@
-FROM debian:trixie-slim
-
-ARG USERNAME=vscode
-ARG USER_UID=1000
-ARG USER_GID=${USER_UID}
+FROM ubuntu:latest
 
 ENV BUN_INSTALL=/bun
-RUN sudo mkdir -p ${BUN_INSTALL} \
-    && curl -k -fsSL https://bun.sh/install | bash \
-    && chown -R ${USERNAME} /bun
+RUN mkdir -p ${BUN_INSTALL} \
+    && curl -k -fsSL https://bun.sh/install | bash 
 
 ENV PATH=${BUN_INSTALL}/bin:${PATH}
 
