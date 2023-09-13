@@ -1,20 +1,6 @@
 {
-	"name": "Bun (Bullseye)",
-	
-	"build": {
-		"dockerfile": "Dockerfile"
-	},
-	
-	"forwardPorts": [9000],
-
-	"portsAttributes": {
-		"9000": {
-			"label": "Bun serve",
-			"onAutoForward": "notify"
-		}
-	},
-
-	"postCreateCommand": "zsh .devcontainer/post-create.zsh",
-	
-	"remoteUser": "vscode"
-}
+	"image": "docker.io/akiraohgaki/devbox:latest",
+	"overrideCommand": true,
+	"workspaceFolder": "/home/devbox",
+	"onCreateCommand": "/devbox/entrypoint.sh env"
+  }
