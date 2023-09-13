@@ -27,7 +27,7 @@ const build = () => {
     outdir: "./dist",
     format: "esm",
     minify: true,
-    sourcemap: "external",
+    sourcemap: "inline",
     plugins: [postcssPlugin],
   })
     .then(() => console.log("build"))
