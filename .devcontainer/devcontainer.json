@@ -1,6 +1,5 @@
 {
-	"image": "docker.io/akiraohgaki/devbox:latest",
+	"image": "oven/bun:latest",
 	"overrideCommand": true,
-	"workspaceFolder": "/home/devbox",
-	"onCreateCommand": "/devbox/entrypoint.sh env"
+	"workspaceFolder": "/home"
   }
