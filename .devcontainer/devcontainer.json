@@ -1,5 +1,7 @@
 {
 	"image": "huismanpeter/devbox:latest",
 	"overrideCommand": true,
-	"forwardPorts": [9090]
+	"forwardPorts": [9090],
+	"workspaceFolder": "/home/devbox",
+  	"onCreateCommand": "/.devcontainer/entrypoint.sh env"
 }
