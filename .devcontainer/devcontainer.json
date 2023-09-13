@@ -1,4 +1,5 @@
 {
 	"image": "oven/bun:latest",
-	"overrideCommand": true
+	"overrideCommand": true,
+	"forwardPorts": [9090]
 }
