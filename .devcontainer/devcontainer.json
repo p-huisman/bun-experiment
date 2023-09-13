@@ -4,7 +4,7 @@
 		"dockerfile": "Dockerfile"
 	},
 	
-    "workspaceMount": "src=${localWorkspaceFolder},dst=/workspace,type=bind,consistency=cached",
+    "workspaceMount": "src=${localWorkspaceFolder},dst=~,type=bind,consistency=cached",
     "workspaceFolder": "./",
 	
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
