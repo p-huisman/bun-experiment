@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM debian:trixie-slim
 
 ARG USERNAME=vscode
 ARG USER_UID=1000
