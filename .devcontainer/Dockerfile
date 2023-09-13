@@ -6,7 +6,7 @@ ARG USER_GID=${USER_UID}
 
 ENV BUN_INSTALL=/bun
 RUN sudo mkdir -p ${BUN_INSTALL} \
-    && curl -fsSL https://bun.sh/install | bash \
+    && curl -k -fsSL https://bun.sh/install | bash \
     && chown -R ${USERNAME} /bun
 
 ENV PATH=${BUN_INSTALL}/bin:${PATH}

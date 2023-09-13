@@ -1,16 +1,21 @@
 {
-    "name": "bun-sample",
-    "module": "index.ts",
-    "type": "module",
-    "scripts": {
-      "build": "bun build.ts"
-    },
-    "devDependencies": {
-      "bun-types": "latest",
-      "p-elements-core": "^1.2.2"
-    },
-    "peerDependencies": {
-      "typescript": "^5.0.0"
-    }
-  }
-  
+  "name": "bun-sample",
+  "module": "dist/dummy-compnent.js",
+  "type": "module",
+  "scripts": {
+    "build": "bun build.ts"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "p-elements-core": "^1.2.2",
+    "postcss": "^8.4.25",
+    "postcss-preset-env": "^9.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "browserslist": [
+    "> 2% in NL",
+    "last 2 versions"
+  ]
+}
