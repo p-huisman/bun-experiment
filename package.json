@@ -3,7 +3,7 @@
   "module": "dist/dummy-compnent.js",
   "type": "module",
   "scripts": {
-    "build": "bun build.ts"
+    "start": "bun build.ts"
   },
   "devDependencies": {
     "bun-types": "latest",
