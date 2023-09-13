@@ -2,6 +2,6 @@
 	"image": "huismanpeter/devbox:latest",
 	"overrideCommand": true,
 	"forwardPorts": [9090],
-	"workspaceFolder": "/home/devbox",
+	"workspaceFolder": "/workspaces/bun-experiment",
   	"onCreateCommand": "/devbox/entrypoint.sh env"
 }
