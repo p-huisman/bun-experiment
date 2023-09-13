@@ -1,5 +1,5 @@
 {
-	"image": "oven/bun:latest",
+	"image": "huismanpeter/devbox:latest",
 	"overrideCommand": true,
 	"forwardPorts": [9090]
 }
