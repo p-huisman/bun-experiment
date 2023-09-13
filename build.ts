@@ -55,7 +55,13 @@ Bun.serve(
         console.log("upgrade");
         return undefined;
       }
-      const  { pathname } = new URL(req.url);
+      let  { pathname } = new URL(req.url);
+      if (pathname.startsWith(".")) {
+        return new Response("Not found", { status: 404 });  
+      }
+      if(pathname.endsWith("/")) {
+        pathname = pathname + "index.html";
+      }
       const f = Bun.file(`.${pathname}`);
       if (f) {
         const r = new Response(await f.arrayBuffer().catch(e => e));
