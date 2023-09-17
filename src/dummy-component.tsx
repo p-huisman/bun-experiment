@@ -17,17 +17,16 @@ export class PDummyElement extends CustomElement {
 
   private render = (): VNode => {
     return <div>Hello {this.name}</div>;
-  }
+  };
 
   static get observedAttributes(): string[] {
-    return ["name"]
+    return ["name"];
   }
 
   @RenderOnSet
   public name = "World";
 
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    this.name = newValue
+    this.name = newValue;
   }
-
 }
