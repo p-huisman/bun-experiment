@@ -1,0 +1,80 @@
+:host {
+  color: var(--greeting-color, white);
+  background-color: var(--greeting-background-color, black);
+  display: block;
+  width: 100%;
+  container-type: inline-size;
+}
+
+:host([clicked]) {
+  background-color: var(--greeting-clicked-background-color, red);
+  color: var(--greeting-clicked-color, white);
+}
+
+.greeting-container {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr auto;
+  grid-gap: 0;
+  grid-template-areas:
+    "greeting-header"
+    "greeting-main"
+    "greeting-aside"
+    "greeting-footer";
+}
+
+.greeting-header {
+  background-color: var(--greeting-header-background-color, darkgray);
+  color: var(--greeting-header-color, black);
+  grid-area: greeting-header;
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 0.5em;
+  height: fit-content;
+}
+
+.greeting-aside {
+  grid-area: greeting-aside;
+  background-color: var(--greeting-aside-background-color, lightgray);
+  color: var(--greeting-aside-color, black);
+  padding: 0.5em;
+  height: fit-content;
+}
+
+.greeting-main {
+  grid-area: greeting-main;
+  padding: 0.5em;
+}
+
+.greeting-footer {
+  grid-area: greeting-footer;
+  font-size: 0.8em;
+  font-style: italic;
+  text-align: center;
+  padding: 0.5em;
+  background-color: var(--greeting-footer-background-color, dimgrey);
+  color: var(--greeting-footer-color, black);
+  height: fit-content;
+}
+
+.greeting-footer ::slotted(*) {
+  display: inline;
+  margin: 1em;
+}
+
+@container (min-width: 600px) {
+  .greeting-container {
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-gap: 0 0.5em;
+    grid-template-areas:
+      "greeting-header greeting-header"
+      "greeting-aside greeting-main"
+      "greeting-footer greeting-footer";
+  }
+  .greeting-aside {
+    width: var(--greeting-aside-width, 300px);
+    height: auto;
+  }
+}

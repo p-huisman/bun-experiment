@@ -1,24 +1,24 @@
 {
-    "compilerOptions": {
-      "experimentalDecorators": true,
-      "target": "ES6",
-      "useDefineForClassFields": false,
-      "module": "ES2020",
-      "jsx": "react",
-      "jsxFactory": "Maquette.h",
-      "moduleResolution": "Bundler",
-      "strict": true,
-      "resolveJsonModule": true,
-      "isolatedModules": true,
-      "esModuleInterop": true,
-      "noUnusedLocals": false,
-      "noUnusedParameters": false,
-      "noImplicitReturns": true,
-      "skipLibCheck": true,
-      "strictNullChecks": false,
-      "types": [
-        "bun-types", "p-elements-core" // add Bun global
-      ]
-    }
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "target": "ESNext",
+
+    "useDefineForClassFields": false,
+    "module": "ESNext",
+    "jsx": "react",
+    "jsxFactory": "Maquette.h",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "types": [
+      "bun-types", "p-elements-core", "@types/jasmine"
+    ]
   }
-  
+}

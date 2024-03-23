@@ -1,0 +1,48 @@
+:root {
+  --color-primary: darkblue;
+  --color-secondary: #003f00e2;
+  --color-tertiary: rgb(254, 177, 35);
+  --text-color: #333;
+
+  --greeting-background-color: darkgray;
+  --greeting-color: var(--text-color);
+  --greeting-clicked-background-color: var(--color-secondary);
+  --greeting-clicked-color: var(white);
+  --greeting-header-background-color: var(--color-primary);
+  --greeting-header-color: white;
+  --greeting-footer-background-color: var(--color-tertiary);
+  --greeting-footer-color: black;
+}
+
+body {
+  background-color: black;
+  color: var(--text-color);
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 100%;
+  min-height: 100vh;
+  font-family: Verdana, sans-serif;
+}
+
+[slot="aside"] {
+  ul {
+    list-style-type: none;
+    padding: 0;
+    h2 {
+      margin: 1em 0 0 0em;
+    }
+    li {
+      margin: 0.5em 0;
+    }
+  }
+  a {
+    color: blue;
+    text-decoration: underline;
+  }
+  a:visited {
+    color: darkblue;
+  }
+  a:hover {
+    color: green;
+  }
+}

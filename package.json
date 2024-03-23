@@ -1,14 +1,19 @@
 {
-  "name": "bun-sample",
-  "module": "dist/dummy-compnent.js",
+  "name": "bun-boilerplate",
+  "module": "index.ts",
   "type": "module",
-  "scripts": {
-    "start": "bun build.ts"
-  },
   "devDependencies": {
+    "@types/jasmine": "^5.1.4",
+    "@types/node": "^20.11.25",
     "bun-types": "latest",
+    "chokidar": "^3.6.0",
+    "fetch-mock": "^9.11.0",
+    "jasmine": "^5.1.0",
+    "jasmine-core": "^5.1.2",
     "p-elements-core": "^1.2.2",
+    "playwright-core": "^1.42.1",
     "postcss": "^8.4.25",
+    "postcss-minify": "^1.1.0",
     "postcss-preset-env": "^9.0.0"
   },
   "peerDependencies": {
@@ -17,5 +22,13 @@
   "browserslist": [
     "> 2% in NL",
     "last 2 versions"
-  ]
+  ],
+  "scripts": {
+    "start": "bun scripts/build.ts --development",
+    "build": "bun scripts/build.ts --production",
+    "develop": "bun scripts/build.ts --development",
+    "test": "bun scripts/build.ts --test",
+    "testdevelop": "bun scripts/build.ts --test --develop",
+    "pw-install-deps": "bunx playwright install --with-deps"
+  }
 }
