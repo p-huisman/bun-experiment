@@ -47,6 +47,7 @@ export default async function handleIndexRequests(
                 <style>
                   body {
                     font-family: sans-serif;
+                    font-size: 16px;
                   }
                   ul {
                     list-style: none;
