@@ -2,7 +2,6 @@ import Run from "bun";
 import fs from "fs";
 import { rm } from "fs/promises";
 import path from "path";
-import { postcssPlugin } from "./postcss-plugin";
 import { Console } from "console";
 import process from "process";
 import { buildCssFile } from "./build-css-file";
@@ -13,7 +12,8 @@ import handleApiRequests from "./api/index";;
 import handleTestRequests from "./test/index";
 import v8toIstanbul from "v8-to-istanbul";
 import { chromium, webkit, firefox } from "playwright-core";
-
+import { buildJsEntrypoints } from "./build-js-entrypoints";
+import handleIndexRequests from "./devserver";
 
 const console = new Console(process.stdout, process.stderr);
 const isProduction = process.argv.includes("--production");
@@ -90,6 +90,10 @@ if (isDevelopment || isTestDevelopment) {
           return new Response(f);
         }
       }
+      response = await handleIndexRequests(req, server);
+      if (response) {
+        return response;
+      }
       return new Response("Not found", { status: 404 });
     },
     error(e) {
@@ -127,21 +131,7 @@ async function build(projectConfig: ProjectConfig): Promise<void> {
         path.join(projectConfig.projectRootDir, entry)
       );
 
-  log("build started");
-  const result = Run.build({
-    entrypoints,
-    outdir: projectConfig.dist,
-    target: "browser",
-    format: "esm",
-    minify: !isProduction,
-    sourcemap: isProduction ? "none" : "inline",
-    plugins: [postcssPlugin],
-  }).catch((e) => e);
-  if (result instanceof Error) {
-    console.error(result);
-    return Promise.reject(result);
-  }
-  log("build complete");
+  buildJsEntrypoints(log, projectConfig, isProduction, entrypoints);
 }
 
 const preprocessCss = (projectConfig: ProjectConfig): Promise<any> => {
@@ -168,6 +158,9 @@ async function start() {
 }
 
 async function openTestPage(projectConfig: ProjectConfig) {
+  if (!isTest || !isTestDevelopment) {
+    return;
+  }
   log("open test page");
   let xunit = "";
   const browserPath = fs.existsSync(projectConfig.browserPath)
