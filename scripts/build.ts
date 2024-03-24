@@ -179,7 +179,7 @@ async function openTestPage(projectConfig: ProjectConfig) {
     const browser = { chromium, webkit, firefox }[projectConfig.browser];
     const browserInstance = await browser.launch({
       executablePath: browserPath,
-      headless: false,
+      headless: isTest && !isTestDevelopment ? true : false,
       devtools: isTestDevelopment ? true : false,
     });
 
