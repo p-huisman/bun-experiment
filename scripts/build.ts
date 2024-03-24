@@ -23,7 +23,7 @@ const isTest = process.argv.includes("--test");
 const isDevelopment = process.argv.includes("--development");
 const isTestDevelopment = isTest && isDevelopment;
 let connnectedSockets: Run.ServerWebSocket<unknown>[] | undefined;
-console.log({ isProduction, isDevelopment, isTest, isTestDevelopment });
+
 await rm("dist", { recursive: true, force: true });
 fs.mkdirSync(path.join(projectConfig.projectRootDir, "dist"), {
   recursive: true,
@@ -37,7 +37,7 @@ if (isDevelopment || isTestDevelopment || isTest) {
     const index = projectConfig?.cssFiles?.findIndex(
       (file) => file.src === name
     );
-    if (index !== -1 && index && projectConfig.cssFiles) {
+    if (index !== -1) {
       await buildCssFile(
         projectConfig,
         log,
@@ -114,7 +114,7 @@ if (isDevelopment || isTestDevelopment || isTest) {
       return new Response("Error", { status: 500 });
     },
     websocket: {
-      message() {},
+      message() { },
       open(ws) {
         connnectedSockets?.push(ws);
       },
@@ -137,11 +137,11 @@ async function build(projectConfig: ProjectConfig): Promise<void> {
   const entrypoints =
     isTest || isTestDevelopment
       ? projectConfig.testEntryPoints.map((entry: string) =>
-          path.join(projectConfig.projectRootDir, entry)
-        )
+        path.join(projectConfig.projectRootDir, entry)
+      )
       : projectConfig.entryPoints.map((entry: string) =>
-          path.join(projectConfig.projectRootDir, entry)
-        );
+        path.join(projectConfig.projectRootDir, entry)
+      );
 
   buildJsEntrypoints(log, projectConfig, isProduction, entrypoints);
 }
@@ -199,7 +199,6 @@ async function openTestPage(projectConfig: ProjectConfig) {
               });
             const entries: any = {};
             for (const entry of coverage) {
-              console.log(entry);
               const converter = v8toIstanbul(entry.url, 0, {
                 source: entry.source ? entry.source : "",
               });
