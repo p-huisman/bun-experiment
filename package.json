@@ -14,7 +14,8 @@
     "playwright-core": "^1.42.1",
     "postcss": "^8.4.25",
     "postcss-minify": "^1.1.0",
-    "postcss-preset-env": "^9.0.0"
+    "postcss-preset-env": "^9.0.0",
+    "v8-to-istanbul": "^9.2.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -28,7 +29,7 @@
     "build": "bun scripts/build.ts --production",
     "develop": "bun scripts/build.ts --development",
     "test": "bun scripts/build.ts --test",
-    "testdevelop": "bun scripts/build.ts --test --develop",
+    "testdevelop": "bun scripts/build.ts --test --development",
     "pw-install-deps": "bunx playwright install --with-deps"
   }
 }

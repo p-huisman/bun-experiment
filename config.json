@@ -12,6 +12,7 @@
     }
   ],
   "devServer": {
+    "host": "localhost",
     "port": 9000
   },
   "chromiumPath": "",
@@ -19,5 +20,7 @@
   "target": "browser",
   "testFiles": [
     "./node_modules/p-elements-core/dist/p-elements-core-modern.js"
-  ]
+  ],
+  "browser": "chromium",
+  "browserPath": "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
 }

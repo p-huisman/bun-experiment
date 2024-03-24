@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>p-component</title>
+    <link rel="stylesheet" href="../dist/styles.css" />
+  </head>
+  <body>
+    <p-component name="World">
+      <div slot="header">Greeting boilerplate</div>
+      <div slot="aside">
+        <ul>
+          <li><a href="https://github.com/p-huisman/esbuild-p-element-boilerplate#readme">Readme</a></li>
+          <li><h2>Css</h2></li>
+          <li><a href="https://www.joshwcomeau.com/css/interactive-guide-to-flexbox/">CSS Flexbox guide</a></li>
+          <li><a href="https://www.joshwcomeau.com/css/interactive-guide-to-grid/">CSS Grid guide</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries">CSS container queries</a></li>
+        </ul>
+      </div>
+      <div slot="footer">Peter Huisman</div>
+    </p-component>
+    <script src="../node_modules/p-elements-core/dist/p-elements-core-modern.js" defer></script>
+    <script type="module" src="../dist/p-component.js"></script>
+  </body>
+</html>

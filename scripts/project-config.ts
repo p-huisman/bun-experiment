@@ -34,9 +34,12 @@ export interface ProjectConfig {
   cssFiles?: {src: string; target: string}[];
   chromiumPath?: string;
   devServer: {
+    host: string,
     port: number;
   };
   dist: string;
   target: "browser";
   testFiles: string[];
+  browser: "chromium" | "firefox" | "webkit";
+  browserPath?: string;
 }

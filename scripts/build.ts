@@ -1,5 +1,6 @@
 import Run from "bun";
 import fs from "fs";
+import { rm } from "fs/promises";
 import path from "path";
 import { postcssPlugin } from "./postcss-plugin";
 import { Console } from "console";
@@ -9,7 +10,10 @@ import { projectConfig, ProjectConfig } from "./project-config";
 import chokidar from "chokidar";
 import { debounce } from "./helpers";
 import handleApiRequests from "./api/index";;
-import handleTestRequests from "./test/index";;
+import handleTestRequests from "./test/index";
+import v8toIstanbul from "v8-to-istanbul";
+import { chromium, webkit, firefox } from "playwright-core";
+
 
 const console = new Console(process.stdout, process.stderr);
 const isProduction = process.argv.includes("--production");
@@ -17,6 +21,9 @@ const isTest = process.argv.includes("--test");
 const isDevelopment = process.argv.includes("--development");
 const isTestDevelopment = isTest && isDevelopment;
 let connnectedSockets: Run.ServerWebSocket<unknown>[] | undefined;
+console.log({ isProduction, isDevelopment, isTest, isTestDevelopment });
+await rm('dist', { recursive: true, force: true });
+fs.mkdirSync(path.join(projectConfig.projectRootDir, "dist"), { recursive: true });
 
 let watcher: fs.FSWatcher | undefined;
 
@@ -71,13 +78,13 @@ if (isDevelopment || isTestDevelopment) {
       if (f) {
         const content = await f.arrayBuffer().catch((e) => e);
         const isError = content instanceof Error;
-        if (!isError && pathname.endsWith(".html") ) {
+        if (!isError && pathname.endsWith(".html")) {
           const decoder = new TextDecoder();
           let stringContent = decoder.decode(content);
           stringContent = stringContent.replace("</head>", `<script defer src="/scripts/devserver/client.js"></script></head>`);
           return new Response(stringContent, { headers: { "Content-Type": "text/html" } });
         }
-        
+
         const r = isError ? null : new Response(content);
         if (r instanceof Response) {
           return new Response(f);
@@ -92,7 +99,7 @@ if (isDevelopment || isTestDevelopment) {
       return new Response("Error", { status: 500 });
     },
     websocket: {
-      message() {},
+      message() { },
       open(ws) {
         connnectedSockets.push(ws);
       },
@@ -114,11 +121,11 @@ async function build(projectConfig: ProjectConfig): Promise<void> {
   const entrypoints =
     isTest || isTestDevelopment
       ? projectConfig.testEntryPoints.map((entry: string) =>
-          path.join(projectConfig.projectRootDir, entry)
-        )
+        path.join(projectConfig.projectRootDir, entry)
+      )
       : projectConfig.entryPoints.map((entry: string) =>
-          path.join(projectConfig.projectRootDir, entry)
-        );
+        path.join(projectConfig.projectRootDir, entry)
+      );
 
   log("build started");
   const result = Run.build({
@@ -155,10 +162,88 @@ function log(message: string) {
   );
 }
 
-build(projectConfig);
-preprocessCss(projectConfig);
+async function start() {
+  await Promise.all([build(projectConfig), preprocessCss(projectConfig)]);
+  openTestPage(projectConfig);
+}
 
-const chromiumPath = fs.existsSync(projectConfig.chromiumPath)
-  ? projectConfig.chromiumPath
-  : undefined;
+async function openTestPage(projectConfig: ProjectConfig) {
+  log("open test page");
+  let xunit = "";
+  const browserPath = fs.existsSync(projectConfig.browserPath)
+    ? projectConfig.browserPath
+    : undefined;
+  const browser = { chromium, webkit, firefox }[projectConfig.browser];
+  const browserInstance = await browser.launch({
+    executablePath: browserPath,
+    headless: false,
+    devtools: isTestDevelopment ? true : false,
+  });
+
+  const page = await browserInstance.newPage();
+  if (isTest) {
+    page.on("console", async (msg) => {
+      const txt = msg.text();
+      // mocha test end
+      if (txt === "END_PASSED") {
+        const coverage = (await page.coverage.stopJSCoverage())
+          .filter((entry) => {
+            return entry.url.includes(".spec");
+          })
+          .map((entry) => {
+            return entry;
+          });
+        const entries: any = {};
+        for (const entry of coverage) {
+          const converter = v8toIstanbul(entry.url, 0, {
+            source: entry.source,
+          });
+          await converter.load();
+          converter.applyCoverage(entry.functions);
+          const istanbul = converter.toIstanbul();
+          for (const key in istanbul) {
+            const np = path.join(
+              projectConfig.projectRootDir,
+              key.split(`:${projectConfig.devServer.port}`, 2)[1],
+            );
+            if (np.includes(".spec.") === false) {
+              istanbul[key].path = np;
+              entries[np] = istanbul[key];
+            }
+          }
+        }
+        await fs.mkdir(`./.nyc_output`, { recursive: true });
+        // await fs.writeFile(
+        //   `./.nyc_output/coverage-pw.json`,
+        //   JSON.stringify(entries),
+        // );
+        // await writeFile(`./TESTS-xunit.xml`, xunit);
+        // log("Reporting complete");
+        // await server.close();
+        // await esbuild.stop();
+        await browserInstance.close();
+
+        log("Test complete");
+        process.exit(0);
+      } else if (txt === "END_FAILED") {
+        log("Test failed");
+        process.exit(1);
+      } else if (txt === "END_INCOMPLETE") {
+        log("Test incomplete");
+        process.exit(0);
+      } else if (txt.startsWith("REPORT ")) {
+        xunit = txt.split("REPORT ", 2)[1];
+      } else {
+        console.log(txt);
+      }
+    });
+    await page.coverage.startJSCoverage();
+  }
+  await page.goto(`http://localhost:${projectConfig.devServer.port}/test`).catch((e) => {
+    console.info(e);
+  });
+}
+
+start();
+
 
